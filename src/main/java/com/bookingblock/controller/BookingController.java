@@ -59,12 +59,12 @@ public class BookingController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBooking(@PathVariable("id") Long id) {
-        boolean deleted = bookingService.deleteBooking(id);
-        if (deleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<ResponseData<Booking>> deleteBooking(@PathVariable("id") Long id) {
+        try {
+            bookingService.deleteBooking(id);
+            return new ResponseEntity<>(new ResponseData<>(null), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseData<>(e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
 }

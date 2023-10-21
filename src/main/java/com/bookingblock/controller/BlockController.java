@@ -1,6 +1,7 @@
 package com.bookingblock.controller;
 
 import com.bookingblock.model.Block;
+import com.bookingblock.model.ResponseData;
 import com.bookingblock.service.BlockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/blocks")
@@ -22,40 +22,51 @@ public class BlockController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Block>> getBlocks() {
-        List<Block> blocks = blockService.getAllBlocks();
-        return new ResponseEntity<>(blocks, HttpStatus.OK);
+    public ResponseEntity<ResponseData<List<Block>>> getBlocks() {
+        try {
+            List<Block> blocks = blockService.getAllBlocks();
+            return new ResponseEntity<>(new ResponseData<>(blocks), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Block> getBlock(@PathVariable("id") Long id) {
-        Optional<Block> block = blockService.getBlockById(id);
-        return block
-                .map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<ResponseData<Block>> getBlock(@PathVariable("id") Long id) {
+        try {
+            Block block = blockService.getBlockById(id);
+            return new ResponseEntity<>(new ResponseData<>(block), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseData<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/")
-    public ResponseEntity<Block> createBlock(@RequestBody Block block) {
-        Block createdBlock = blockService.createBlock(block);
-        return new ResponseEntity<>(createdBlock, HttpStatus.CREATED);
+    public ResponseEntity<ResponseData<Block>> createBlock(@RequestBody Block block) {
+        try {
+            Block createdBlock = blockService.createBlock(block);
+            return new ResponseEntity<>(new ResponseData<>(createdBlock), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseData<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Block> updateBlock(@PathVariable("id") Long id, @RequestBody Block updatedBlock) {
-        Optional<Block> block = blockService.updateBlock(id, updatedBlock);
-        return block
-                .map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<ResponseData<Block>> updateBlock(@PathVariable("id") Long id, @RequestBody Block updatedBlock) {
+        try {
+            return new ResponseEntity<>(new ResponseData<>(blockService.updateBlock(id, updatedBlock)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseData<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBlock(@PathVariable("id") Long id) {
-        boolean deleted = blockService.deleteBlock(id);
-        if (deleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<ResponseData<Block>> deleteBlock(@PathVariable("id") Long id) {
+        try {
+            blockService.deleteBlock(id);
+            return new ResponseEntity<>(new ResponseData<>(null), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseData<>(e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
 }

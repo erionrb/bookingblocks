@@ -19,32 +19,44 @@ public class BlockService {
         return bookingRepository.findAll();
     }
 
-    public Optional<Block> getBlockById(Long id) {
-        return bookingRepository.findById(id);
+    public Block getBlockById(Long id) {
+        Optional<Block> block =  bookingRepository.findById(id);
+        return block.orElseThrow(() -> new IllegalArgumentException("Block " + id + " does not exist"));
     }
 
     public Block createBlock(Block booking) {
         return bookingRepository.save(booking);
     }
 
-    public Optional<Block> updateBlock(Long id, Block updatedBlock) {
-        Optional<Block> existingBlock = bookingRepository.findById(id);
-        if (existingBlock.isPresent()) {
-            updatedBlock.setId(existingBlock.get().getId());
-            return Optional.of(bookingRepository.save(updatedBlock));
-        }
-        return Optional.empty();
+    public Block updateBlock(Long id, Block block) {
+        block.setId(id);
+        validateUpdateBlock(block);
+        return bookingRepository.save(block);
     }
 
-    public boolean deleteBlock(Long id) {
-        if (bookingRepository.existsById(id)) {
-            bookingRepository.deleteById(id);
-            return true;
-        }
-        return false;
+    public void deleteBlock(Long id) {
+        Block block = new Block();
+        block.setId(id);
+
+        validateDeleteBlock(block);
+        bookingRepository.deleteById(id);
     }
 
     public List<Block> findByDateRange(Date startDate, Date endDate) {
         return bookingRepository.findByDateRange(startDate, endDate);
+    }
+
+    public void validateUpdateBlock(Block block) {
+        validateBlockExists(block);
+    }
+
+    public void validateDeleteBlock(Block block) {
+        validateBlockExists(block);
+    }
+
+    public void validateBlockExists(Block block) {
+        if (!bookingRepository.existsById(block.getId())) {
+            throw new IllegalArgumentException("Block " + block.getId() + " does not exist");
+        }
     }
 }

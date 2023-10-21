@@ -38,12 +38,12 @@ public class BookingService {
         return Optional.of(bookingRepository.save(updatedBooking)).get();
     }
 
-    public boolean deleteBooking(Long id) {
-        if (bookingRepository.existsById(id)) {
-            bookingRepository.deleteById(id);
-            return true;
-        }
-        return false;
+    public void deleteBooking(Long id) {
+        Booking booking = new Booking();
+        booking.setId(id);
+
+        validateDeleteBooking(booking);
+        bookingRepository.deleteById(id);
     }
 
     public void validateSaveBooking(Booking booking) {
@@ -53,10 +53,14 @@ public class BookingService {
     }
 
     public void validateUpdateBooking(Booking booking) {
-        validateOverlappingBlock(booking);
         validateBookingDates(booking);
         validateBookingExists(booking);
+        validateOverlappingBlock(booking);
         validateOverlappingOtherBooking(booking);
+    }
+
+    public void validateDeleteBooking(Booking booking) {
+        validateBookingExists(booking);
     }
 
     public void validateOverlappingBooking(Booking booking) {
@@ -87,6 +91,6 @@ public class BookingService {
 
     public void validateBookingExists(Booking booking) {
         if (!bookingRepository.existsById(booking.getId()))
-            throw new IllegalArgumentException("Booking does not exist");
+            throw new IllegalArgumentException("Booking " + booking.getId() + " does not exist");
     }
 }
