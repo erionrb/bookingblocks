@@ -5,6 +5,7 @@ import com.bookingblock.repository.BlockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,5 +42,9 @@ public class BlockService {
             return true;
         }
         return false;
+    }
+
+    public List<Block> findByDateRange(Date startDate, Date endDate) {
+        return bookingRepository.findByDateRange(startDate, endDate);
     }
 }

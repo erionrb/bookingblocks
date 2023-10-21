@@ -1,6 +1,7 @@
 package com.bookingblock.controller;
 
 import com.bookingblock.model.Booking;
+import com.bookingblock.model.ResponseData;
 import com.bookingblock.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,17 +37,25 @@ public class BookingController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
-        Booking createdBooking = bookingService.createBooking(booking);
-        return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
+    public ResponseEntity<ResponseData<Booking>> createBooking(@RequestBody Booking booking) {
+        try {
+            Booking createdBooking = bookingService.createBooking(booking);
+            return new ResponseEntity<>(new ResponseData<>(createdBooking), HttpStatus.CREATED);
+        } catch (Exception e) {
+            HttpStatus status = e.getMessage().contains("overlap") ? HttpStatus.CONFLICT : HttpStatus.INTERNAL_SERVER_ERROR;
+            return new ResponseEntity<>(new ResponseData<>(e.getMessage()), status);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Booking> updateBooking(@PathVariable("id") Long id, @RequestBody Booking updatedBooking) {
-        Optional<Booking> booking = bookingService.updateBooking(id, updatedBooking);
-        return booking
-                .map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<ResponseData<Booking>> updateBooking(@PathVariable("id") Long id, @RequestBody Booking updatedBooking) {
+        try {
+            Booking booking = bookingService.updateBooking(id, updatedBooking);
+            return new ResponseEntity<>(new ResponseData<>(booking), HttpStatus.OK);
+        } catch (Exception e) {
+            HttpStatus status = e.getMessage().contains("overlap") ? HttpStatus.CONFLICT : HttpStatus.INTERNAL_SERVER_ERROR;
+            return new ResponseEntity<>(new ResponseData<>(e.getMessage()), status);
+        }
     }
 
     @DeleteMapping("/{id}")
