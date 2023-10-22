@@ -1,9 +1,6 @@
 package com.bookingblock.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -14,6 +11,10 @@ public class Booking {
     private String guestName;
     private Date startDate;
     private Date endDate;
+
+    @OneToOne
+    @JoinColumn(name = "property_id", referencedColumnName = "id")
+    private Property property;
 
     public Booking() {
     }
@@ -55,5 +56,13 @@ public class Booking {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Property getProperty() {
+        return property;
+    }
+
+    public void setProperty(Property property) {
+        this.property = property;
     }
 }

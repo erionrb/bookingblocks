@@ -11,6 +11,6 @@ import java.util.List;
 
 public interface BlockRepository extends JpaRepository<Block, Long> {
 
-    @Query("SELECT b FROM Block b WHERE (b.startDate <= :endDate) AND (b.endDate >= :startDate)")
-    List<Block> findByDateRange(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+    @Query("SELECT b FROM Block b WHERE (b.startDate <= :endDate) AND (b.endDate >= :startDate) AND (b.property.id = :propertyId)")
+    List<Block> findByDateRange(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("propertyId") Long propertyId);
 }

@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    @Query("SELECT b FROM Booking b WHERE (b.startDate <= :endDate) AND (b.endDate >= :startDate)")
-    List<Booking> findByDateRange(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+    @Query("SELECT b FROM Booking b WHERE (b.startDate <= :endDate) AND (b.endDate >= :startDate) AND (b.property.id = :propertyId)")
+    List<Booking> findByDateRange(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("propertyId") Long propertyId);
 }

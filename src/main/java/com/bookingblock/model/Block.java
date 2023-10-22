@@ -12,6 +12,10 @@ public class Block {
     private Date startDate;
     private Date endDate;
 
+    @OneToOne
+    @JoinColumn(name = "property_id", referencedColumnName = "id")
+    private Property property;
+
     public Block() {
     }
 
@@ -53,4 +57,11 @@ public class Block {
         this.endDate = endDate;
     }
 
+    public Property getProperty() {
+        return property;
+    }
+
+    public void setProperty(Property property) {
+        this.property = property;
+    }
 }
