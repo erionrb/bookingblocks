@@ -13,25 +13,26 @@ import java.util.Optional;
 public class BlockService {
 
     @Autowired
-    private BlockRepository bookingRepository;
+    private BlockRepository blockRepository;
 
     public List<Block> getAllBlocks() {
-        return bookingRepository.findAll();
+        return blockRepository.findAll();
     }
 
     public Block getBlockById(Long id) {
-        Optional<Block> block =  bookingRepository.findById(id);
+        Optional<Block> block =  blockRepository.findById(id);
         return block.orElseThrow(() -> new IllegalArgumentException("Block " + id + " does not exist"));
     }
 
-    public Block createBlock(Block booking) {
-        return bookingRepository.save(booking);
+    public Block createBlock(Block block) {
+        validateCreateBlock(block);
+        return blockRepository.save(block);
     }
 
     public Block updateBlock(Long id, Block block) {
         block.setId(id);
         validateUpdateBlock(block);
-        return bookingRepository.save(block);
+        return blockRepository.save(block);
     }
 
     public void deleteBlock(Long id) {
@@ -39,11 +40,16 @@ public class BlockService {
         block.setId(id);
 
         validateDeleteBlock(block);
-        bookingRepository.deleteById(id);
+        blockRepository.deleteById(id);
     }
 
     public List<Block> findByDateRange(Date startDate, Date endDate) {
-        return bookingRepository.findByDateRange(startDate, endDate);
+        return blockRepository.findByDateRange(startDate, endDate);
+    }
+
+    public void validateCreateBlock(Block block) {
+        validateParams(block);
+        validateBlockDates(block);
     }
 
     public void validateUpdateBlock(Block block) {
@@ -55,8 +61,26 @@ public class BlockService {
     }
 
     public void validateBlockExists(Block block) {
-        if (!bookingRepository.existsById(block.getId())) {
+        if (!blockRepository.existsById(block.getId())) {
             throw new IllegalArgumentException("Block " + block.getId() + " does not exist");
+        }
+    }
+
+    public void validateParams(Block block) {
+        if (block.getStartDate() == null) {
+            throw new IllegalArgumentException("Start date is required");
+        }
+        if (block.getEndDate() == null) {
+            throw new IllegalArgumentException("End date is required");
+        }
+        if (block.getName() == null) {
+            throw new IllegalArgumentException("Name is required");
+        }
+    }
+
+    public void validateBlockDates(Block block) {
+        if (block.getStartDate().after(block.getEndDate())) {
+            throw new IllegalArgumentException("Start date must be before end date");
         }
     }
 }

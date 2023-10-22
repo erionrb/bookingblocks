@@ -15,5 +15,6 @@ public class BookingBlockApplication {
     public static void main(String[] args) {
         SpringApplication.run(BookingBlockApplication.class, args);
     }
+
 }
 

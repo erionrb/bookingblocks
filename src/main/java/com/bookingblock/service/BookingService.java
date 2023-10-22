@@ -3,6 +3,7 @@ package com.bookingblock.service;
 import com.bookingblock.model.Block;
 import com.bookingblock.model.Booking;
 import com.bookingblock.repository.BookingRepository;
+import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,9 @@ public class BookingService {
         return bookingRepository.findAll();
     }
 
-    public Optional<Booking> getBookingById(Long id) {
-        return bookingRepository.findById(id);
+    public Booking getBookingById(Long id) {
+        Optional<Booking> booking = bookingRepository.findById(id);
+        return booking.orElseThrow(() -> new IllegalArgumentException("Booking " + id + " does not exist"));
     }
 
     public Booking createBooking(Booking booking) {
@@ -32,10 +34,11 @@ public class BookingService {
         return bookingRepository.save(booking);
     }
 
-    public Booking updateBooking(Long id, Booking updatedBooking) {
+    public Booking updateBooking(Long id, Booking updatedBooking) throws Exception {
         updatedBooking.setId(id);
         validateUpdateBooking(updatedBooking);
-        return Optional.of(bookingRepository.save(updatedBooking)).get();
+        Optional<Booking> booking = Optional.of(bookingRepository.save(updatedBooking));
+        return booking.orElseThrow(() -> new Exception("Failed to save booking"));
     }
 
     public void deleteBooking(Long id) {
@@ -47,6 +50,7 @@ public class BookingService {
     }
 
     public void validateSaveBooking(Booking booking) {
+        validateParams(booking);
         validateOverlappingBlock(booking);
         validateOverlappingBooking(booking);
         validateBookingDates(booking);
@@ -61,6 +65,12 @@ public class BookingService {
 
     public void validateDeleteBooking(Booking booking) {
         validateBookingExists(booking);
+    }
+
+    public void validateParams(Booking booking) {
+        if (booking.getStartDate() == null) throw new IllegalArgumentException("Start date is required");
+        if (booking.getEndDate() == null) throw new IllegalArgumentException("End date is required");
+        if (booking.getGuestName() == null) throw new IllegalArgumentException("Guest name is required");
     }
 
     public void validateOverlappingBooking(Booking booking) {

@@ -9,3 +9,11 @@ spring:
       enabled: true
   hibernate:
     ddl-auto: update
+
+  logging:
+    level:
+      org.springframework: DEBUG
+
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER

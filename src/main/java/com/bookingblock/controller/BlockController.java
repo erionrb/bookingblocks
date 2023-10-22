@@ -3,6 +3,8 @@ package com.bookingblock.controller;
 import com.bookingblock.model.Block;
 import com.bookingblock.model.ResponseData;
 import com.bookingblock.service.BlockService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/blocks")
+@Api(tags = "Block Endpoints")
 public class BlockController {
 
     private final BlockService blockService;
@@ -22,6 +25,7 @@ public class BlockController {
     }
 
     @GetMapping("/")
+    @ApiOperation(value = "Get all blocks")
     public ResponseEntity<ResponseData<List<Block>>> getBlocks() {
         try {
             List<Block> blocks = blockService.getAllBlocks();
@@ -32,6 +36,7 @@ public class BlockController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "Get block by id")
     public ResponseEntity<ResponseData<Block>> getBlock(@PathVariable("id") Long id) {
         try {
             Block block = blockService.getBlockById(id);
@@ -42,6 +47,7 @@ public class BlockController {
     }
 
     @PostMapping("/")
+    @ApiOperation(value = "Create block")
     public ResponseEntity<ResponseData<Block>> createBlock(@RequestBody Block block) {
         try {
             Block createdBlock = blockService.createBlock(block);
@@ -52,6 +58,7 @@ public class BlockController {
     }
 
     @PutMapping("/{id}")
+    @ApiOperation(value = "Update block")
     public ResponseEntity<ResponseData<Block>> updateBlock(@PathVariable("id") Long id, @RequestBody Block updatedBlock) {
         try {
             return new ResponseEntity<>(new ResponseData<>(blockService.updateBlock(id, updatedBlock)), HttpStatus.OK);
@@ -61,6 +68,7 @@ public class BlockController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Delete block")
     public ResponseEntity<ResponseData<Block>> deleteBlock(@PathVariable("id") Long id) {
         try {
             blockService.deleteBlock(id);
