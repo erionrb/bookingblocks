@@ -1,0 +1,705 @@
+{
+	"info": {
+		"_postman_id": "4179c51d-f0a3-44a5-a18b-002c3013cdc7",
+		"name": "BookingBlockCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25702815",
+		"_collection_link": "https://tokeinvest.postman.co/workspace/bookingblock~7b8e9776-b399-430a-a8e1-4ca33e941fba/collection/25702815-4179c51d-f0a3-44a5-a18b-002c3013cdc7?action=share&source=collection_link&creator=25702815"
+	},
+	"item": [
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Create Booking",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"guestName\": \"Erion\",\n  \"startDate\": \"2023-10-11T10:00:00Z\",\n  \"endDate\": \"2023-10-11T10:00:00Z\",\n  \"property\": {\n      \"id\": 1\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/bookings/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bookings",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Booking",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"guestName\": \"Erion\",\n  \"startDate\": \"2023-10-21T10:00:00Z\",\n  \"endDate\": \"2023-10-28T10:00:00Z\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/bookings/",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bookings",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 21 Oct 2023 15:57:51 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"guestName\": \"Erion\",\n    \"startDate\": \"2023-10-21T10:00:00.000+00:00\",\n    \"endDate\": \"2023-10-28T10:00:00.000+00:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Booking",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"guestName\": \"Erion\",\n    \"startDate\": \"2023-10-20T10:00:00.000+00:00\",\n    \"endDate\": \"2023-10-28T10:00:00.000+00:00\",\n    \"property\": {\n        \"id\": 1\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/bookings/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bookings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Booking",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"guestName\": \"Erion 2.0\",\n    \"startDate\": \"2023-10-21T10:00:00.000+00:00\",\n    \"endDate\": \"2023-10-28T10:00:00.000+00:00\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/bookings/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bookings",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 21 Oct 2023 15:58:11 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"guestName\": \"Erion 2.0\",\n    \"startDate\": \"2023-10-21T10:00:00.000+00:00\",\n    \"endDate\": \"2023-10-28T10:00:00.000+00:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "List Bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/bookings/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bookings",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Booking Copy",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/bookings/",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bookings",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 21 Oct 2023 15:58:14 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"guestName\": \"Erion 2.0\",\n        \"startDate\": \"2023-10-21T10:00:00.000+00:00\",\n        \"endDate\": \"2023-10-28T10:00:00.000+00:00\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get Booking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/bookings/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bookings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Booking",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/bookings/:id",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bookings",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 21 Oct 2023 15:58:16 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"guestName\": \"Erion 2.0\",\n    \"startDate\": \"2023-10-21T10:00:00.000+00:00\",\n    \"endDate\": \"2023-10-28T10:00:00.000+00:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Booking",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/bookings/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bookings",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Block",
+			"item": [
+				{
+					"name": "Create Block",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Blocked test\",\n  \"startDate\": \"2023-10-01T10:00:00Z\",\n  \"endDate\": \"2023-10-10T10:00:00Z\",\n  \"property\": {\n      \"id\": 1\n  }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/blocks/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"blocks",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Booking",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Blocked test\",\n  \"startDate\": \"2023-10-21T10:00:00Z\",\n  \"endDate\": \"2023-10-28T10:00:00Z\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/blocks/",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"blocks",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 21 Oct 2023 16:31:16 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Blocked test\",\n    \"startDate\": \"2023-10-21T10:00:00.000+00:00\",\n    \"endDate\": \"2023-10-28T10:00:00.000+00:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "List Blocks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/blocks/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"blocks",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Blocks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/blocks/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"blocks",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Blocks",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/blocks/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"blocks",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Blocks",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Blocked 2.0\",\n    \"startDate\": \"2023-10-21T10:00:00.000+00:00\",\n    \"endDate\": \"2023-10-28T10:00:00.000+00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/blocks/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"blocks",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Property",
+			"item": [
+				{
+					"name": "Create Property",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"address\": \"10880, Malibu Point, 90265 - Malibu , LA , Califórnia , EUA\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/properties/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"properties",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Booking",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"guestName\": \"Erion\",\n  \"startDate\": \"2023-10-21T10:00:00Z\",\n  \"endDate\": \"2023-10-28T10:00:00Z\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/bookings/",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bookings",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 21 Oct 2023 15:57:51 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"guestName\": \"Erion\",\n    \"startDate\": \"2023-10-21T10:00:00.000+00:00\",\n    \"endDate\": \"2023-10-28T10:00:00.000+00:00\"\n}"
+						}
+					]
+				},
+				{
+					"name": "List Property",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/properties/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"properties",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Booking Copy",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/bookings/",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"bookings",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 21 Oct 2023 15:58:14 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"guestName\": \"Erion 2.0\",\n        \"startDate\": \"2023-10-21T10:00:00.000+00:00\",\n        \"endDate\": \"2023-10-28T10:00:00.000+00:00\"\n    }\n]"
+						}
+					]
+				}
+			]
+		}
+	]
+}

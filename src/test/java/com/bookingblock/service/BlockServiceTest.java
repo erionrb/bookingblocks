@@ -1,6 +1,7 @@
 package com.bookingblock.service;
 
 import com.bookingblock.model.Block;
+import com.bookingblock.model.Property;
 import com.bookingblock.repository.BlockRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,9 @@ class BlockServiceTest {
     private BlockService blockService;
 
     @Mock
+    private PropertyService propertyService;
+
+    @Mock
     private BlockRepository blockRepository;
 
     @BeforeAll
@@ -35,8 +39,12 @@ class BlockServiceTest {
     @Test
     void testGetBlockById_Success() {
         Long blockId = 1L;
+        Property property = new Property("Malibu point 10880, Malibu, CA");
+        property.setId(1L);
+
         Block block = new Block();
         block.setId(blockId);
+        block.setProperty(property);
         when(blockRepository.findById(blockId)).thenReturn(Optional.of(block));
 
         Block result = blockService.getBlockById(blockId);
@@ -56,14 +64,20 @@ class BlockServiceTest {
 
     @Test
     void testCreateBlock_Success() {
+        Long propertyId = 1L;
+        Property property = new Property("Malibu point 10880, Malibu, CA");
+        property.setId(propertyId);
+
         Block block = new Block();
         block.setId(1L);
         block.setStartDate(Date.valueOf("2023-10-21"));
         block.setEndDate(Date.valueOf("2023-10-23"));
         block.setName("Blocked Event");
+        block.setProperty(property);
 
-        when(blockRepository.findByDateRange(any(Date.class), any(Date.class))).thenReturn(new ArrayList<>());
+        when(blockRepository.findByDateRange(any(Date.class), any(Date.class), any(Long.class))).thenReturn(new ArrayList<>());
         when(blockRepository.save(block)).thenReturn(block);
+        when(propertyService.getPropertyById(any(Long.class))).thenReturn(property);
 
         Block result = blockService.createBlock(block);
 
