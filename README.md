@@ -11,6 +11,8 @@ This project is a booking and block management system built using Java 11 and Sp
 - [Built With](#built-with)
 - [Project structure](#project-structure)
 - [Test](#test)
+- [API Documentation](#api-documentation)
+- [Postman Collection](#postman-collection)
 
 ## Introduction
 
